@@ -11,7 +11,8 @@
         rel="stylesheet">
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 </head>
 
 <body>
@@ -42,7 +43,7 @@
             <div class="inputs">
                 <div class="input-group">
                     <label" for="">Departure</label>
-                    <input class="inp-style" type="date" name="">
+                        <input class="inp-style" type="date" name="">
                 </div>
                 <div class="input-group">
                     <label for="">Return</label>
@@ -52,22 +53,27 @@
             <div class="input-group f-class">
                 <div>
                     <label for="">First Class ($150)</label>
-                    <input id="firstclass-count" class="inp-style inp-width form-control" type="number" name="" value="0">
+                    <input id="firstclass-count" class="inp-style inp-width form-control" type="number" name=""
+                        value="0">
                 </div>
                 <div class="d-grid gap-2">
-                    <button onclick="ticketQuantityChange('firstclass', true)" class="btn btn-primary" type="button">+</button>
-                    <button onclick="ticketQuantityChange('firstclass', false)" class="btn btn-primary" type="button">-</button>
+                    <button onclick="ticketQuantityChange('firstclass', true)" class="btn btn-primary"
+                        type="button">+</button>
+                    <button onclick="ticketQuantityChange('firstclass', false)" class="btn btn-primary"
+                        type="button">-</button>
                 </div>
             </div>
-            
+
             <div class="input-group f-class">
                 <div>
                     <label for="">Economy ($100)</label>
                     <input id="economy-count" class="inp-style inp-width" type="number" name="" value="0">
                 </div>
                 <div class="d-grid gap-2">
-                    <button onclick="ticketQuantityChange('economy', true)" class="btn btn-primary" type="button">+</button>
-                    <button onclick="ticketQuantityChange('economy', false)" class="btn btn-primary" type="button">-</button>
+                    <button onclick="ticketQuantityChange('economy', true)" class="btn btn-primary"
+                        type="button">+</button>
+                    <button onclick="ticketQuantityChange('economy', false)" class="btn btn-primary"
+                        type="button">-</button>
                 </div>
             </div>
             <div class="calculations">
@@ -103,59 +109,63 @@
 
         <div class="booking-content">
             <h1>discover <br> around the world</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicingelit. Provident voluptatibus quam fuga laborumalias veniam libero autem quasi maxime ullam vero nama imi dolor, architecto ab facilis eaque deserunt nobise voluptatibus quam</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicingelit. Provident voluptatibus quam fuga laborumalias
+                veniam libero autem quasi maxime ullam vero nama imi dolor, architecto ab facilis eaque deserunt nobise
+                voluptatibus quam</p>
         </div>
-    </section>
+        </section>
 
-    <!--Thank You-->
+        <!--Thank You-->
 
-    <script>
-        function ticketQuantityChange(ticket, isIncrease){
+        <script>
 
-         
-        const ticketInput = document.getElementById(ticket + '-count');
-        const ticketCount = parseInt(ticketInput.value);
+            // function of onclick event for getting input ticket number.
+           
+            function ticketQuantityChange(ticket, isIncrease) {
+
+                // const ticketInput = document.getElementById(ticket + '-count');
+                // const ticketCount = parseInt(ticketInput.value);
+
+                const ticketCount = getInputValue(ticket);
+
+                let ticketNewCount = ticketCount;
+                if (isIncrease == true) {
+                    ticketNewCount = ticketCount + 1;
+                }
+                if (isIncrease == false && ticketCount > 0) {
+                    ticketNewCount = ticketCount - 1;
+                }
 
 
+                document.getElementById(ticket + '-count').value = ticketNewCount;
 
-            let ticketNewCount = ticketCount;
-            if(isIncrease==true){
-                ticketNewCount = ticketCount +1;
+                calculateTotal()
+
             }
-            if(isIncrease==false && ticketCount>0){
-                ticketNewCount = ticketCount-1;
+// Calculation of subtotal and vat and grand total value.
+            function calculateTotal() {
+
+                const firstClassTotal = getInputValue('firstclass');
+                const economyTotal = getInputValue('economy');
+
+                const totalPrice = firstClassTotal * 150 + economyTotal * 100;
+
+                document.getElementById('sub-total').innerText = '$' + totalPrice;
+
+                const tax = Math.round(totalPrice * 0.1);
+                document.getElementById('vat').innerText = '$' + tax;
+
+                const grandTotal = totalPrice + tax;
+                document.getElementById('grand-total').innerText = '$' + grandTotal;
+
             }
-                    
-            
-            document.getElementById(ticket+'-count').value = ticketNewCount;
-
-            calculateTotal ()
-            
+// Getting input of ticket number
+            function getInputValue(ticket) {
+                const ticketInput = document.getElementById(ticket + '-count');
+                const ticketCount = parseInt(ticketInput.value);
+                return ticketCount;
             }
-
-         function calculateTotal (){
-         
-            const firstClassTotal = getInputValue('firstclass');
-            const economyTotal = getInputValue('economy');
-
-         const totalPrice = firstClassTotal*150+economyTotal*100;
-         
-         document.getElementById('sub-total').innerText ='$'+totalPrice;
-         
-         const tax = Math.round(totalPrice * 0.1);
-         document.getElementById('vat').innerText ='$'+tax;
-
-         const grandTotal = totalPrice + tax;
-         document.getElementById('grand-total').innerText = '$'+ grandTotal;
-         
-      }
-
-      function getInputValue(ticket){
-         const ticketInput = document.getElementById(ticket +'-count');
-         const ticketCount = parseInt(ticketInput.value);
-         return ticketCount;
-      }
-    </script>
+        </script>
 </body>
 
 </html>
